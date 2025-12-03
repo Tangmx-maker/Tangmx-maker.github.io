@@ -72,10 +72,10 @@
       object-fit: cover;
     }
 
-    /* 轮播相册 —— 已加高！ */
+    /* 轮播相册 */
     .gallery {
       width: 100%;
-      height: 320px; /* 👈 关键：从240px提高到320px */
+      height: 320px;
       margin: 25px auto;
       border-radius: 16px;
       overflow: hidden;
@@ -98,6 +98,33 @@
     .gallery img.fade {
       opacity: 0;
       transform: scale(0.98);
+    }
+
+    /* 查看大图的遮罩层 */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .preview-image {
+      max-width: 90%;
+      max-height: 90%;
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      z-index: 10000;
     }
 
     .number25 {
@@ -199,13 +226,15 @@
       .number25 { font-size: 5em; }
       .message { padding: 22px 18px; font-size: 1em; }
       .main-photo-frame { width: 140px; height: 140px; }
-      .gallery { height: 280px; } /* 👈 手机端也适当加高 */
+      .gallery { height: 280px; }
     }
   </style>
 </head>
 <body>
+  <!-- 背景粒子 -->
   <div class="particles" id="particles"></div>
 
+  <!-- 音频 -->
   <audio id="bgMusic" preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/03/08/audio_9b3d6c0a8c.mp3?filename=relaxing-piano-music-for-sleep-113192.mp3" type="audio/mpeg">
   </audio>
@@ -216,7 +245,7 @@
       <img src="photo.jpg" alt="我们的主照片">
     </div>
 
-    <!-- 轮播相册（9张） -->
+    <!-- 轮播相册 -->
     <div class="gallery">
       <img src="photo1.jpg" alt="回忆1" class="active">
       <img src="photo2.jpg" alt="回忆2" class="fade">
@@ -227,6 +256,12 @@
       <img src="photo7.jpg" alt="回忆7" class="fade">
       <img src="photo8.jpg" alt="回忆8" class="fade">
       <img src="photo9.jpg" alt="回忆9" class="fade">
+    </div>
+
+    <!-- 查看大图的遮罩层 -->
+    <div id="imagePreviewOverlay" class="overlay">
+      <span class="close-btn" onclick="closeImagePreview()">&times;</span>
+      <img id="previewImage" class="preview-image">
     </div>
 
     <div class="candles">🕯️ 🕯️ 🕯️</div>
@@ -268,6 +303,15 @@
       setTimeout(() => heart.remove(), 10000);
     }
 
+    function showImagePreview(src) {
+      document.getElementById('previewImage').src = src;
+      document.getElementById('imagePreviewOverlay').style.display = 'flex';
+    }
+
+    function closeImagePreview() {
+      document.getElementById('imagePreviewOverlay').style.display = 'none';
+    }
+
     function startGallery() {
       const images = document.querySelectorAll('.gallery img');
       let currentIndex = 0;
@@ -279,6 +323,12 @@
         images[currentIndex].classList.remove('fade');
         images[currentIndex].classList.add('active');
       }
+
+      images.forEach(img => {
+        img.addEventListener('click', () => {
+          showImagePreview(img.src);
+        });
+      });
 
       setInterval(showNextImage, 3000);
     }
