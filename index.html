@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎂 生日快乐</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #333;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    h1 {
+      font-size: 2.4em;
+      color: #d32f2f;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    .cake {
+      font-size: 4em;
+      margin: 20px 0;
+    }
+    .number25 {
+      font-size: 6em;
+      font-weight: bold;
+      color: #e91e63;
+      margin: 10px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    .message {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      line-height: 1.7;
+      text-align: left;
+      white-space: pre-line;
+      font-size: 1.1em;
+    }
+    .music-tip {
+      margin-top: 20px;
+      color: #5d4037;
+      font-size: 0.95em;
+    }
+    .heart {
+      position: absolute;
+      opacity: 0;
+      animation: fall 10s infinite linear;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="cake">🎂</div>
+    <div class="number25">25</div>
+    <h1>生日快乐！</h1>
+    <div class="message">
+25岁，于你而言，是人生画卷中浓墨重彩的一笔。
+它褪去了青涩，沉淀了美好，
+让你如一颗打磨好的宝石，愈发璀璨夺目。
+
+在这个特别的日子里，
+我想把世间所有的美好都揉进祝福里送给你。
+
+愿你永远被爱意包围，被温柔以待，
+所有的梦想都能如愿以偿。
+愿你的每一天都充满阳光与欢笑，
+烦恼都被清风带走，幸福如影随形。
+
+未来的路还很长，
+也许会有风雨，会有坎坷，
+但请相信，我会一直陪在你身边。
+无论是阳光灿烂的日子，
+还是阴雨绵绵的时光，
+我都会紧紧牵着你的手，与你一起面对，一起分享。
+
+我会努力成为你的依靠，
+为你遮风挡雨，也与你一同欣赏沿途的风景。
+
+最后，再次祝我最爱的你，
+25岁生日快乐！
+愿你往后余生，尽是星辰大海，尽享岁月温柔。
+    </div>
+    <div class="music-tip">
+      💖 点击页面任意位置播放《幸福摩天轮》
+    </div>
+  </div>
+
+  <!-- 背景音乐（需用户交互后才能播放） -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_3b9c3d9d5c.mp3" type="audio/mpeg">
+    <!-- 注意：此处仅为示例音效。因版权原因，无法直接嵌入《幸福摩天轮》 -->
+  </audio>
+
+  <script>
+    // 创建爱心雨
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.innerHTML = '💖';
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+      heart.style.opacity = Math.random() * 0.7 + 0.3;
+      heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
+    }
+
+    setInterval(createHeart, 500);
+
+    // 点击播放音乐（必须由用户手势触发）
+    const audio = document.getElementById('bgMusic');
+    document.body.addEventListener('click', () => {
+      if (audio.paused) {
+        // 尝试播放（如果失败，提示手动播放）
+        audio.play().catch(() => {
+          alert('🎵 由于版权限制，无法自动播放《幸福摩天轮》。\n\n请手动打开音乐 App 搜索播放～');
+        });
+      } else {
+        audio.pause();
+      }
+    });
+  </script>
+</body>
+</html>
