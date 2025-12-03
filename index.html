@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -56,14 +56,31 @@
       to { transform: scale(1); opacity: 1; }
     }
 
-    /* 相册轮播 */
+    /* 主圆形照片 */
+    .main-photo-frame {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 25px;
+      border: 4px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 25px rgba(233, 30, 99, 0.5);
+      animation: float 6s ease-in-out infinite;
+    }
+    .main-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 轮播相册 */
     .gallery {
       width: 100%;
-      height: 300px;
-      margin: 20px auto;
-      border-radius: 20px;
+      height: 240px;
+      margin: 25px auto;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
       position: relative;
       background: rgba(0,0,0,0.2);
     }
@@ -182,7 +199,8 @@
     @media (max-width: 480px) {
       .number25 { font-size: 5em; }
       .message { padding: 22px 18px; font-size: 1em; }
-      .gallery { height: 240px; }
+      .main-photo-frame { width: 140px; height: 140px; }
+      .gallery { height: 200px; }
     }
   </style>
 </head>
@@ -196,7 +214,12 @@
   </audio>
 
   <div class="container">
-    <!-- 轮播相册 -->
+    <!-- 👑 主圆形照片（固定不变） -->
+    <div class="main-photo-frame">
+      <img src="photo.jpg" alt="我们的主照片">
+    </div>
+
+    <!-- 🖼️ 轮播相册（9张回忆） -->
     <div class="gallery">
       <img src="photo1.jpg" alt="回忆1" class="active">
       <img src="photo2.jpg" alt="回忆2" class="fade">
@@ -216,7 +239,7 @@
 🎂 生日快乐🎂25生日快乐！25岁，于你而言，是人生画卷中浓墨重彩的一笔。它褪去了青涩，沉淀了美好，让你如一颗打磨好的宝石，愈发璀璨夺目。在这个特别的日子里，我想把世间所有的美好都揉进祝福里送给你。愿你永远被爱意包围，被温柔以待，所有的梦想都能如愿以偿。愿你的每一天都充满阳光与欢笑，烦恼都被清风带走，幸福如影随形。未来的路还很长，也许会有风雨，也许会有坎坷，但请相信，我会一直陪在你身边。无论是阳光灿烂的日子，还是阴雨绵绵的时光，我都会紧紧牵着你的手，与你一起面对，一起分享。我会努力成为你的依靠，为你遮风挡雨，也与你一同欣赏沿途的风景。最后，再次祝我最爱的你，25岁生日快乐！愿你往后余生，尽是星辰大海，尽享岁月温柔。
     </div>
     <button class="play-btn" onclick="toggleMusic()">🎵 播放/暂停 钢琴曲</button>
-    <div class="footer">轻柔钢琴 · 专为你而放</div>
+    <div class="footer">轻柔钢琴 · 无版权 · 专为你而放</div>
   </div>
 
   <script>
@@ -290,4 +313,3 @@
   </script>
 </body>
 </html>
-
