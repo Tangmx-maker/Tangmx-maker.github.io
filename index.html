@@ -10,18 +10,30 @@
       padding: 0;
       box-sizing: border-box;
     }
+
+    /* 设置 photo.jpg 为全屏背景 */
     body {
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      background: url('photo.jpg') no-repeat center center fixed;
+      background-size: cover;
       font-family: "PingFang SC", "Helvetica Neue", sans-serif;
       color: white;
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
       line-height: 1.6;
-      padding: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    /* 背景叠加一层暗色蒙版，让文字和图片更清晰 */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.55); /* 可调深浅 */
+      z-index: -1;
     }
 
     .particles {
@@ -55,49 +67,28 @@
       to { transform: scale(1); opacity: 1; }
     }
 
-    /* 主圆形照片 */
-    .main-photo-frame {
-      width: 170px;
-      height: 170px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 0 auto 25px;
-      border: 4px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 0 25px rgba(233, 30, 99, 0.5);
-      animation: float 6s ease-in-out infinite;
-    }
-    .main-photo-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* 轮播相册 */
+    /* 轮播相册 —— 居中在顶部区域 */
     .gallery {
-      width: 100%;
-      height: 320px;
-      margin: 25px auto;
-      border-radius: 16px;
+      width: 300px;
+      height: 300px;
+      margin: 0 auto 25px;
+      border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 8px 25px rgba(0,0,0,0.4);
       position: relative;
       background: rgba(0,0,0,0.2);
     }
     .gallery img {
+      position: absolute;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.8s ease, opacity 0.8s ease;
-      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
     }
     .gallery img.active {
-      display: block;
       opacity: 1;
-      transform: scale(1.02);
-    }
-    .gallery img.fade {
-      opacity: 0;
-      transform: scale(0.98);
     }
 
     /* 查看大图的遮罩层 */
@@ -107,7 +98,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 0.9);
       display: none;
       justify-content: center;
       align-items: center;
@@ -225,8 +216,7 @@
     @media (max-width: 480px) {
       .number25 { font-size: 5em; }
       .message { padding: 22px 18px; font-size: 1em; }
-      .main-photo-frame { width: 140px; height: 140px; }
-      .gallery { height: 280px; }
+      .gallery { width: 260px; height: 260px; }
     }
   </style>
 </head>
@@ -240,22 +230,17 @@
   </audio>
 
   <div class="container">
-    <!-- 主圆形照片 -->
-    <div class="main-photo-frame">
-      <img src="photo.jpg" alt="我们的主照片">
-    </div>
-
-    <!-- 轮播相册 -->
+    <!-- 轮播相册（现在是页面最上方的核心视觉） -->
     <div class="gallery">
       <img src="photo1.jpg" alt="回忆1" class="active">
-      <img src="photo2.jpg" alt="回忆2" class="fade">
-      <img src="photo3.jpg" alt="回忆3" class="fade">
-      <img src="photo4.jpg" alt="回忆4" class="fade">
-      <img src="photo5.jpg" alt="回忆5" class="fade">
-      <img src="photo6.jpg" alt="回忆6" class="fade">
-      <img src="photo7.jpg" alt="回忆7" class="fade">
-      <img src="photo8.jpg" alt="回忆8" class="fade">
-      <img src="photo9.jpg" alt="回忆9" class="fade">
+      <img src="photo2.jpg" alt="回忆2">
+      <img src="photo3.jpg" alt="回忆3">
+      <img src="photo4.jpg" alt="回忆4">
+      <img src="photo5.jpg" alt="回忆5">
+      <img src="photo6.jpg" alt="回忆6">
+      <img src="photo7.jpg" alt="回忆7">
+      <img src="photo8.jpg" alt="回忆8">
+      <img src="photo9.jpg" alt="回忆9">
     </div>
 
     <!-- 查看大图的遮罩层 -->
@@ -275,6 +260,7 @@
   </div>
 
   <script>
+    // 创建背景粒子
     function createParticles() {
       const container = document.getElementById('particles');
       for (let i = 0; i < 30; i++) {
@@ -292,6 +278,7 @@
       }
     }
 
+    // 爱心雨
     function createHeart() {
       const heart = document.createElement('div');
       heart.innerHTML = '💖';
@@ -303,6 +290,7 @@
       setTimeout(() => heart.remove(), 10000);
     }
 
+    // 查看大图
     function showImagePreview(src) {
       document.getElementById('previewImage').src = src;
       document.getElementById('imagePreviewOverlay').style.display = 'flex';
@@ -312,18 +300,18 @@
       document.getElementById('imagePreviewOverlay').style.display = 'none';
     }
 
+    // 轮播逻辑
     function startGallery() {
       const images = document.querySelectorAll('.gallery img');
       let currentIndex = 0;
 
       function showNextImage() {
         images[currentIndex].classList.remove('active');
-        images[currentIndex].classList.add('fade');
         currentIndex = (currentIndex + 1) % images.length;
-        images[currentIndex].classList.remove('fade');
         images[currentIndex].classList.add('active');
       }
 
+      // 点击放大
       images.forEach(img => {
         img.addEventListener('click', () => {
           showImagePreview(img.src);
@@ -333,6 +321,7 @@
       setInterval(showNextImage, 3000);
     }
 
+    // 音乐控制
     function toggleMusic() {
       const audio = document.getElementById('bgMusic');
       if (audio.paused) {
@@ -347,6 +336,7 @@
       }
     }
 
+    // 初始化
     window.addEventListener('load', () => {
       createParticles();
       setInterval(createHeart, 800);
