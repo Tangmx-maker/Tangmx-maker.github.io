@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -24,7 +24,6 @@
       align-items: center;
     }
 
-    /* 背景粒子 */
     .particles {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -73,10 +72,10 @@
       object-fit: cover;
     }
 
-    /* 轮播相册 */
+    /* 轮播相册 —— 已加高！ */
     .gallery {
       width: 100%;
-      height: 240px;
+      height: 320px; /* 👈 关键：从240px提高到320px */
       margin: 25px auto;
       border-radius: 16px;
       overflow: hidden;
@@ -200,26 +199,24 @@
       .number25 { font-size: 5em; }
       .message { padding: 22px 18px; font-size: 1em; }
       .main-photo-frame { width: 140px; height: 140px; }
-      .gallery { height: 200px; }
+      .gallery { height: 280px; } /* 👈 手机端也适当加高 */
     }
   </style>
 </head>
 <body>
-  <!-- 背景粒子 -->
   <div class="particles" id="particles"></div>
 
-  <!-- 音频 -->
   <audio id="bgMusic" preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/03/08/audio_9b3d6c0a8c.mp3?filename=relaxing-piano-music-for-sleep-113192.mp3" type="audio/mpeg">
   </audio>
 
   <div class="container">
-    <!-- 👑 主圆形照片（固定不变） -->
+    <!-- 主圆形照片 -->
     <div class="main-photo-frame">
       <img src="photo.jpg" alt="我们的主照片">
     </div>
 
-    <!-- 🖼️ 轮播相册（9张回忆） -->
+    <!-- 轮播相册（9张） -->
     <div class="gallery">
       <img src="photo1.jpg" alt="回忆1" class="active">
       <img src="photo2.jpg" alt="回忆2" class="fade">
@@ -243,7 +240,6 @@
   </div>
 
   <script>
-    // 创建背景粒子
     function createParticles() {
       const container = document.getElementById('particles');
       for (let i = 0; i < 30; i++) {
@@ -261,7 +257,6 @@
       }
     }
 
-    // 爱心雨
     function createHeart() {
       const heart = document.createElement('div');
       heart.innerHTML = '💖';
@@ -273,7 +268,6 @@
       setTimeout(() => heart.remove(), 10000);
     }
 
-    // 图片轮播
     function startGallery() {
       const images = document.querySelectorAll('.gallery img');
       let currentIndex = 0;
@@ -289,7 +283,6 @@
       setInterval(showNextImage, 3000);
     }
 
-    // 音乐控制
     function toggleMusic() {
       const audio = document.getElementById('bgMusic');
       if (audio.paused) {
@@ -304,7 +297,6 @@
       }
     }
 
-    // 初始化
     window.addEventListener('load', () => {
       createParticles();
       setInterval(createHeart, 800);
